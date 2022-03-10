@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_catalog/Home_page.dart';
+import 'package:flutter_catalog/pages/Home_page.dart';
+import 'package:flutter_catalog/pages/Login_page.dart';
 
 void main(List<String> args) {
-  runApp(Myapp());
+  runApp(const MyApp());
 }
 
-class Myapp extends StatelessWidget {
-  const Myapp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginPage(),
+        '/login': (context) => const LoginPage(),
+      },
     );
   }
 }
