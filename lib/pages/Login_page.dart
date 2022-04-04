@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_catalog/utils/routes.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool changebutton = false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -22,9 +29,9 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 40.0,
               ),
-              const Text(
-                "Welcome to Login Page",
-                style: TextStyle(
+              Text(
+                "Welcome $name",
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -43,6 +50,10 @@ class LoginPage extends StatelessWidget {
                         hintText: "Enter User Name",
                         label: Text("User Name"),
                       ),
+                      onChanged: (value) {
+                        name = value;
+                        setState(() {});
+                      },
                     ),
                     TextFormField(
                       obscureText: true,
@@ -54,16 +65,52 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 40.0,
                     ),
-                    ElevatedButton(
-                      child: const Text("Login"),
-                      style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 75, 75, 75),
-                          minimumSize: const Size(150, 50)),
-                      onPressed: () {
+
+                    InkWell(
+                      onTap: () async {
+                        setState(() {
+                          changebutton = true;
+                        });
+                        await Future.delayed(const Duration(seconds: 1));
                         Navigator.pushNamed(context, Myroutes.homeRoute);
                       },
+                      child: AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          width: changebutton ? 50 : 150,
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: changebutton
+                              ? const Icon(
+                                  Icons.done,
+                                  color: Colors.white,
+                                )
+                              : const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            // shape: changebutton
+                            //     ? BoxShape.circle
+                            //     : BoxShape.rectangle,
+                            borderRadius:
+                                BorderRadius.circular(changebutton ? 50 : 10),
+                          )),
                     )
+
+                    // ElevatedButton(
+                    //   child: const Text("Login"),
+                    //   style: TextButton.styleFrom(
+                    //       backgroundColor:
+                    //           const Color.fromARGB(255, 75, 75, 75),
+                    //       minimumSize: const Size(150, 50)),
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, Myroutes.homeRoute);
+                    //   },
+                    // )
                   ],
                 ),
               )
